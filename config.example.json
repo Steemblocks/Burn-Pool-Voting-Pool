@@ -1,0 +1,16 @@
+{
+  "target_account": "steemburnup",
+  "voting_account": "steemburnpool",
+  "active_key": "5kxxxYourActiveKeyHereXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "check_interval_seconds": 300,
+  "vote_weight": 10000,
+  "posts_limit": 20,
+  "vote_delay_ms": 1000,
+  "check_immediately": true,
+  "dry_run": false,
+  "nodes": [
+    "https://api.steemit.com",
+    "https://api.steem.fans",
+    "https://api.steemitdev.com"
+  ]
+}

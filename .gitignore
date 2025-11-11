@@ -1,0 +1,30 @@
+# Configuration files with sensitive credentials
+config.json
+.env
+.env.local
+
+# Log files
+*.log
+logs/
+output.txt
+
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
+.DS_Store?
+*.swp
+*.swo
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# Temporary files
+*.tmp
+.temp/
+tmp/
