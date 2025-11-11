@@ -1,82 +1,173 @@
-# 🚀 Deployment Guide
+# 🐳 Docker Deployment Guide
 
-## Quick Start (30 seconds)
+Deploy the Steem Voting Bot using Docker for production environments.
 
-### 1. Install Dependencies
+## Quick Start
+
+### 1. Build the Docker Image
+
 ```bash
-npm install
+docker build -t steem-voting-bot .
 ```
 
-### 2. Configure
-Edit `config.json` and add your **active key**:
+### 2. Run the Container
+
+```bash
+docker run -d \
+  --name steem-voting-bot \
+  --restart unless-stopped \
+  -v "$(pwd)/config.json:/app/config.json:ro" \
+  steem-voting-bot
+```
+
+**Windows (PowerShell):**
+```powershell
+docker run -d `
+  --name steem-voting-bot `
+  --restart unless-stopped `
+  -v "${PWD}/config.json:/app/config.json:ro" `
+  steem-voting-bot
+```
+
+### 3. View Logs
+
+```bash
+docker logs -f steem-voting-bot
+```
+
+## Configuration
+
+Before running, create `config.json` with your settings:
+
 ```json
 {
-  "active_key": "YOUR_ACTIVE_KEY_HERE"
+  "target_account": "steemburnup",
+  "voting_account": "steemburnpool",
+  "active_key": "YOUR_ACTIVE_KEY_HERE",
+  "posts_limit": 20,
+  "check_interval_seconds": 300,
+  "vote_weight": 10000,
+  "dry_run": false
 }
 ```
 
-### 3. Start Bot
+**Get your active key:**
+1. Log in to Steemit.com
+2. Wallet → Permissions
+3. Show Private Key (next to Active)
+4. Copy and paste into config.json
+
+## Container Management
+
+### Stop the Bot
 ```bash
-npm start
+docker stop steem-voting-bot
 ```
 
-**Done!** The bot is now running and will vote every 300 seconds.
-
----
-
-## Verify It's Working
-
-Look for these lines in the output:
-```
-✅ Fetched X RECENT root posts from @steemburnup
-Already voted on post-name (blockchain check), skipping...
-Voted on N new posts
-⏰ Scheduled to check every 300 seconds
-Bot is now running. Press Ctrl+C to stop.
+### Start the Bot
+```bash
+docker start steem-voting-bot
 ```
 
----
-
-## Test Before Running (Optional)
-
-Edit `config.json`:
-```json
-{
-  "dry_run": true
-}
+### Remove the Container
+```bash
+docker rm steem-voting-bot
 ```
 
-Run `npm start`. Bot will simulate voting without sending to blockchain.
+### View Recent Logs
+```bash
+docker logs --tail 50 steem-voting-bot
+```
 
-Then set `"dry_run": false` to enable live voting.
+### Live Logs (Follow)
+```bash
+docker logs -f steem-voting-bot
+```
 
----
+## Test Mode (Dry Run)
 
-## Stop the Bot
+Set `"dry_run": true` in `config.json` to test without voting:
 
-Press `Ctrl+C` in the terminal.
+```bash
+docker run -it \
+  --name steem-voting-bot-test \
+  -v "$(pwd)/config.json:/app/config.json:ro" \
+  steem-voting-bot
+```
 
----
+Press `Ctrl+C` to stop.
 
-## Get Your Active Key
+## Docker Compose (Optional)
 
-1. Go to [steemit.com](https://steemit.com)
-2. Login with your account
-3. Click "Wallet" → "Permissions"
-4. Click "Show Private Key" next to "Active"
-5. Enter your password
-6. Copy the key (51 characters, starts with `5`)
-7. Paste into `config.json`
+Create `docker-compose.yml`:
 
----
+```yaml
+version: '3.8'
 
-## That's It! 🎉
+services:
+  steem-voting-bot:
+    build: .
+    container_name: steem-voting-bot
+    restart: unless-stopped
+    volumes:
+      - ./config.json:/app/config.json:ro
+    environment:
+      - NODE_ENV=production
+```
 
-Your bot is now:
-- ✅ Monitoring @steemburnup for new posts
-- ✅ Voting automatically with 100% weight
-- ✅ Checking every 5 minutes
-- ✅ Using official Steem API
-- ✅ Protecting against duplicate votes
+Then run:
+```bash
+docker-compose up -d
+docker-compose logs -f
+```
 
-Enjoy! 🗳️
+## Monitoring
+
+### Check Container Status
+```bash
+docker ps | grep steem-voting-bot
+```
+
+### Check Resource Usage
+```bash
+docker stats steem-voting-bot
+```
+
+### Inspect Container
+```bash
+docker inspect steem-voting-bot
+```
+
+## Troubleshooting
+
+### Container Won't Start
+```bash
+docker logs steem-voting-bot
+```
+
+### Permission Issues
+Make sure `config.json` is readable:
+```bash
+chmod 644 config.json
+```
+
+### Port Conflicts
+The bot doesn't use any ports, so no conflicts expected.
+
+### Update Bot Code
+1. Stop container: `docker stop steem-voting-bot`
+2. Remove image: `docker rmi steem-voting-bot`
+3. Rebuild: `docker build -t steem-voting-bot .`
+4. Restart: `docker run -d ...` (use the command from Quick Start)
+
+## Production Best Practices
+
+1. **Keep config.json secure** - Use Docker secrets in production
+2. **Monitor logs regularly** - Check for errors
+3. **Set restart policy** - `--restart unless-stopped` is recommended
+4. **Use volumes** - Mount config.json as read-only
+5. **Backup config.json** - Never lose your private key
+
+## License
+
+MIT
