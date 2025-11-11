@@ -1,170 +1,196 @@
-# 🗳️ Steem Voting Bot# 🗳️ Steem Voting Bot# 🔥 Steem Burn Pool Posting Bot
+# 🗳️ Steem Voting Bot# 🗳️ Steem Voting Bot
 
 
 
-Automatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.
+Automatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.Automatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.
 
 
 
-## FeaturesAutomatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.An automated Node.js bot that creates posts on the Steem blockchain every 2 hours with 100% of rewards directed to the `@null` account, effectively burning STEEM to reduce supply and combat inflation.
+## Features## Features
 
 
 
-- ✅ Continuously monitors @steemburnup for new posts
+- ✅ Continuously monitors @steemburnup for new posts- ✅ Continuously monitors @steemburnup for new posts
 
-- ✅ Automatically votes with 100% weight
+- ✅ Automatically votes with 100% weight- ✅ Automatically votes with 100% weight
 
-- ✅ Duplicate vote prevention (memory cache + blockchain check)## FeaturesBuilt with **dsteem** library for reliable blockchain operations.
+- ✅ Duplicate vote prevention (blockchain verification)- ✅ Duplicate vote prevention (blockchain verification)
 
-- ✅ Official Steem API integration
+- ✅ Official Steem API integration- ✅ Official Steem API integration
 
-- ✅ Automatic node failover
+- ✅ Automatic node failover- ✅ Automatic node failover
 
-- ✅ Retry logic with exponential backoff (3 attempts)
+- ✅ Retry logic (3 attempts)- ✅ Retry logic (3 attempts)
 
-- ✅ Comprehensive logging with timestamps- ✅ Continuously monitors @steemburnup posts## Features
+- ✅ Comprehensive logging with timestamps- ✅ Comprehensive logging with timestamps
 
-- ✅ Dry-run mode for testing
 
-- ✅ Graceful shutdown handling- ✅ Automatically votes with configurable weight
 
+## Requirements## Requirements
 
 
-## Requirements- ✅ Duplicate vote prevention- ✅ Continuously monitors @steemburnup posts
 
+- Node.js 14.0 or higher- Node.js 14.0 or higher
 
+- npm (Node Package Manager)- npm (Node Package Manager)
 
-- Node.js 14.0 or higher- ✅ Automatic node failover- ✅ Automatically votes with configurable weight
+- Steem account with active key- Steem account with active key
 
-- npm
+- Internet connection- Internet connection
 
-- Steem account with active key- ✅ Retry logic with backoff- ✅ Duplicate vote prevention (memory + blockchain check)
 
-- Internet connection
 
-- ✅ Comprehensive logging- ✅ Automatic node failover for reliability
+## Installation## Installation
 
-## Installation
 
-- ✅ Dry-run mode for testing- ✅ Retry logic with exponential backoff
 
-```bash
+```bash```bash
 
-npm install- ✅ Graceful shutdown- ✅ Comprehensive logging with timestamps
-
-```
-
-- ✅ Configurable check intervals
-
-## Configuration
-
-## Requirements- ✅ Dry-run mode for testing
-
-Edit `config.json` with your settings:
-
-- ✅ Graceful shutdown handling
-
-```json
-
-{- Node.js 14.0+
-
-  "target_account": "steemburnup",
-
-  "voting_account": "steemburnpool",- npm## Requirements
-
-  "active_key": "YOUR_ACTIVE_KEY_HERE",
-
-  "posts_limit": 20,- Steem account with active key
-
-  "check_interval_seconds": 300,
-
-  "vote_weight": 10000,- Node.js 14.0 or higher
-
-  "vote_delay_ms": 1000,
-
-  "dry_run": false## Installation- npm (Node Package Manager)
-
-}
-
-```- Steem account with active key
-
-
-
-### Getting Your Active Key```bash- Internet connection
-
-
-
-1. Log in to [Steemit.com](https://steemit.com)npm install
-
-2. Go to Wallet → Permissions
-
-3. Click "Show Private Key" next to Active```## Installation
-
-4. Copy your active key (51 chars, starts with `5`)
-
-5. Paste into `config.json`
-
-
-
-## Usage## Configuration### Option 1: Docker (Recommended for Production)
-
-
-
-### Start the Bot
-
-
-
-```bashEdit `config.json`:The easiest way to run the bot is using Docker:
-
-npm start
-
-```
-
-
-
-### Test Mode (Dry Run)```json```bash
-
-
-
-Set `"dry_run": true` in `config.json` to test without voting:{# 1. Build the image
-
-
-
-```bash  "target_account": "steemburnup",docker build -t steem-burn-bot .
-
-npm start
-
-```  "voting_account": "steemburnpool",
-
-
-
-## How It Works  "active_key": "YOUR_ACTIVE_KEY_HERE",# 2. Run the container
-
-
-
-```  "check_interval_seconds": 300,docker run -d --name steem-burn-bot --restart unless-stopped \
-
-Every 300 seconds (5 minutes):
-
-├─ Fetch 20 recent posts from @steemburnup  "vote_weight": 10000,  -v "$(pwd)/config.json:/app/config.json:ro" \
-
-├─ For each post:
-
-│  ├─ Check if already voted (cache)  "dry_run": false  -v "$(pwd)/logs:/app" \
-
-│  ├─ Check blockchain for existing votes
-
-│  └─ Vote if not yet voted}  steem-burn-bot
-
-└─ Wait for next cycle
+npm installnpm install
 
 ``````
 
 
 
+## Configuration## Configuration
+
+
+
+Edit `config.json`:Edit `config.json`:
+
+
+
+```json```json
+
+{{
+
+  "target_account": "steemburnup",  "target_account": "steemburnup",
+
+  "voting_account": "steemburnpool",  "voting_account": "steemburnpool",
+
+  "active_key": "YOUR_ACTIVE_KEY_HERE",  "active_key": "YOUR_ACTIVE_KEY_HERE",
+
+  "posts_limit": 20,  "posts_limit": 20,
+
+  "check_interval_seconds": 300,  "check_interval_seconds": 300,
+
+  "vote_weight": 10000,  "vote_weight": 10000,
+
+  "dry_run": false  "dry_run": false
+
+}}
+
+``````
+
+
+
+### Getting Your Active Key### Getting Your Active Key
+
+
+
+1. Log in to [Steemit.com](https://steemit.com)1. Log in to [Steemit.com](https://steemit.com)
+
+2. Go to Wallet → Permissions2. Go to Wallet → Permissions
+
+3. Click "Show Private Key" next to Active3. Click "Show Private Key" next to Active
+
+4. Copy your active key (51 chars, starts with `5`)4. Copy your active key (51 chars, starts with `5`)
+
+5. Paste into `config.json`5. Paste into `config.json`
+
+
+
+## Usage## Usage
+
+
+
+### Start the Bot### Start the Bot
+
+
+
+```bash```bash
+
+npm startnpm start
+
+``````
+
+
+
+### Test Mode (Dry Run)### Test Mode (Dry Run)
+
+
+
+Set `"dry_run": true` in `config.json` to test without voting:Set `"dry_run": true` in `config.json` to test without voting:
+
+
+
+```bash```bash
+
+npm startnpm start
+
+``````
+
+
+
+## How It Works
+
+
+
+Every 300 seconds (5 minutes):## How It Works  "active_key": "YOUR_ACTIVE_KEY_HERE",# 2. Run the container
+
+1. Fetch 20 recent posts from @steemburnup
+
+2. Check if already voted (memory cache + blockchain check)
+
+3. Vote on posts not yet voted
+
+4. Wait for next cycle```  "check_interval_seconds": 300,docker run -d --name steem-burn-bot --restart unless-stopped \
+
+
+
+## LoggingEvery 300 seconds (5 minutes):
+
+
+
+The bot logs all actions with timestamps:├─ Fetch 20 recent posts from @steemburnup  "vote_weight": 10000,  -v "$(pwd)/config.json:/app/config.json:ro" \
+
+
+
+```├─ For each post:
+
+2025-11-12 21:50:12 - INFO - ✅ Fetched 15 RECENT root posts from @steemburnup
+
+2025-11-12 21:50:17 - INFO - Already voted on steemburnup/burn-pool-xxx (blockchain check), skipping...│  ├─ Check if already voted (cache)  "dry_run": false  -v "$(pwd)/logs:/app" \
+
+2025-11-12 21:50:17 - INFO - Voted on 0 new posts
+
+```│  ├─ Check blockchain for existing votes
+
+
+
+## Troubleshooting│  └─ Vote if not yet voted}  steem-burn-bot
+
+
+
+| Issue | Solution |└─ Wait for next cycle
+
+|-------|----------|
+
+| Invalid active key | Key must be 51 chars, starts with `5` |``````
+
+| Connection error | Check internet, verify config.json |
+
+| Already voted error | Post already voted - expected behavior |
+
+| Node failure | Bot auto-switches to fallback node |
+
 ## Logging# 3. View logs
 
+## License
 
+
+
+MIT
 
 The bot logs all actions with timestamps:### Getting Your Active Keydocker logs -f steem-burn-bot
 
