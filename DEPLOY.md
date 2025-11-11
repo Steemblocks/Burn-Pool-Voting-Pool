@@ -11,7 +11,7 @@ npm install
 Edit `config.json` and add your **active key**:
 ```json
 {
-  "active_key": "YOUR_51_CHARACTER_KEY_HERE"
+  "active_key": "YOUR_ACTIVE_KEY_HERE"
 }
 ```
 
