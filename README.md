@@ -1,36 +1,70 @@
-# 🗳️ Steem Voting Bot# 🗳️ Steem Voting Bot
+# 🗳️ Steem Voting Bot# 🗳️ Steem Voting Bot# 🗳️ Steem Voting Bot
 
 
 
-Automatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.Automatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.
+Automatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.
 
 
 
-## Features## Features
+## SetupAutomatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.Automatically vote on posts created by `@steemburnup` using the `@steemburnpool` account.
 
 
 
-- ✅ Continuously monitors @steemburnup for new posts- ✅ Continuously monitors @steemburnup for new posts
+1. **Install dependencies:**
+
+   ```bash
+
+   npm install## Features## Features
+
+   ```
+
+
+
+2. **Configure** `config.json`:
+
+   - Set `"active_key": "YOUR_ACTIVE_KEY_HERE"` (from Steemit.com Wallet → Permissions → Show Private Key)- ✅ Continuously monitors @steemburnup for new posts- ✅ Continuously monitors @steemburnup for new posts
+
+   - Keep other defaults
 
 - ✅ Automatically votes with 100% weight- ✅ Automatically votes with 100% weight
 
+## Running
+
 - ✅ Duplicate vote prevention (blockchain verification)- ✅ Duplicate vote prevention (blockchain verification)
 
-- ✅ Official Steem API integration- ✅ Official Steem API integration
+```bash
+
+npm start- ✅ Official Steem API integration- ✅ Official Steem API integration
+
+```
 
 - ✅ Automatic node failover- ✅ Automatic node failover
 
+## How It Votes
+
 - ✅ Retry logic (3 attempts)- ✅ Retry logic (3 attempts)
 
-- ✅ Comprehensive logging with timestamps- ✅ Comprehensive logging with timestamps
+Every 5 minutes:
 
+1. Fetch 20 recent posts from @steemburnup- ✅ Comprehensive logging with timestamps- ✅ Comprehensive logging with timestamps
 
+2. Check if already voted (uses blockchain verification)
+
+3. Vote on new posts (100% weight)
+
+4. Repeat
 
 ## Requirements## Requirements
 
+That's it! The bot runs continuously until you stop it.
 
+
+
+## License
 
 - Node.js 14.0 or higher- Node.js 14.0 or higher
+
+MIT
 
 - npm (Node Package Manager)- npm (Node Package Manager)
 
