@@ -12,7 +12,7 @@ RUN npm install --production && \
     npm cache clean --force
 
 # Copy application files
-COPY steem_burn_bot.js ./
+COPY steem_voting_bot.js ./
 
 # Don't copy config.json - it should be mounted as volume
 # This prevents accidentally baking credentials into the image
@@ -31,4 +31,4 @@ USER nodejs
 ENV NODE_ENV=production
 
 # Run the bot
-CMD ["node", "steem_burn_bot.js"]
+CMD ["node", "steem_voting_bot.js"]
